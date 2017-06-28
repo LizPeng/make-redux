@@ -2,7 +2,7 @@
 let appState = {
   title: {
     text:'React.js 小书',
-    color:'red',e
+    color:'red',
   },
   content: {
     text: 'React.js 小书内容',
@@ -52,8 +52,6 @@ function createStore (state, stateChanger) {
     contentDOM.innerHTML = content.text
     contentDOM.style.color = content.color
   }
-
-
 
 //修改数据的生成的方式
 const store = createStore(appState, stateChanger)
