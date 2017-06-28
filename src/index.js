@@ -47,7 +47,7 @@ function renderContent (content) {
 
 renderApp(appState) //首次渲染页面
 
-dispatch({ type:'UPDATE_TITLE_TEXT',text:'React小书' })//修改标题文本
-dispatch({ type:'UPDATE_TITLE_COLOR', color:'blue'}) //修改标题颜色
+dispatch({ type:'UPDATE_TITLE_TEXT',text:'React小书>>>' })//修改标题文本
+dispatch({ type:'UPDATE_TITLE_COLOR', color:'black'}) //修改标题颜色
 renderApp(appState) //把新的数据渲染到页面上
 

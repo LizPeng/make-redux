@@ -55,7 +55,7 @@ function createStore (state, stateChanger) {
 
 //修改数据的生成的方式
 const store = createStore(appState, stateChanger)
-store.subsribe ( ()=>renderApp(store.getState()) ) 
+store.subscribe ( ()=>renderApp(store.getState()) ) 
 renderApp(store.getState()) //首次渲染页面
 
 store.dispatch({ type:'UPDATE_TITLE_TEXT',text:'React小书' })//修改标题文本
