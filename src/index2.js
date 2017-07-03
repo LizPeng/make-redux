@@ -11,6 +11,7 @@ let appState = {
 }
 
 function stateChanger(state, action) {
+  console.log(state)
   switch (action.type) {
     case 'UPDATE_TITLE_TEXT' :
           state.title.text = action.text 

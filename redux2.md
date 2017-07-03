@@ -97,3 +97,15 @@ function createStore (state, stateChanger) {
     store.dispatch({ type: 'UPDATE_TITLE_TEXT', text: '《React.js 小书》' }) // 修改标题文本
     store.dispatch({ type: 'UPDATE_TITLE_COLOR', color: 'blue' }) // 修改标题颜色
     // ...后面不管如何 store.dispatch，都不需要重新调用 renderApp
+
+我们只需要`subscribe`一次，后面不管如何`dispatch`进行数据修改，`renderApp`函数就会被重新调用，页面就会被重新被渲染。这样的订阅模式还有好处就是，以后我们还可以拿同一块数据来渲染别的页面，这时`dispatch`导致的变化也会让每个页面都重新渲染：
+
+    const store = createStore(appState, stateChanger)
+    
+    store.subscribe( ()=> renderApp(store.getState()))
+    store.subscribe( ()=> renderApp2(store.getState()))
+
+
+##总结
+
+现在我们有了一个比较通用的`createStore`，它可以产生一种我们新定义的数据类型`store`，通过`store.getState`我们获取共享状态，而且我们约定只能通过`store.dispatch`修改共享状态。`store`也允许我们通过`store.subscribe`监听数据状态被修改了 ，并且进行了后续的例如重新渲染页面的操作。
