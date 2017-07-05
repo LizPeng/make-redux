@@ -112,3 +112,4 @@ createStore现在可以直接拿来用了，套路就是：
 
 现在的代码跟React.js一点关系都没有，接下来我们要把React.js和Redux结合起来，用Redux模式帮助管理React.js的应用状态。
 
+哈哈
