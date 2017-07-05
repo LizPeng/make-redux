@@ -77,3 +77,38 @@ reducer是不允许有副作用的。你不能再里面操作DOM，也不能发A
 		 }	
     }
 	const store = createStore(themeReducer)
+
+
+##总结
+
+我们从一个简单的例子的代码中发现了共享的状态如果可以被任意修改的话，那么程序的行为将非常不可预测，所以我们提高了修改数据的门槛：你必须通过dispatch执行某些允许的修改操作，而且必须大张旗鼓的在action里面声明。
+
+这种模式挺好用的，我们就把它抽象出来一个createStore，它可以产生store，里面包含getState和dispatch函数，方便我们使用。
+
+后来发现每次修改数据都需要手动重新渲染非常麻烦，我们希望自动重新渲染视图。所以后来加入了订阅者模式，可以通过store.subscribe订阅数据修改事件，每次数据更新的时候自动重新渲染视图。
+
+接下来我们发现了原来的“重新渲染视图”有比较严重的性能问题，我们引入了“共享结构的对象”来帮我们解决问题，这样就可以在每个渲染函数的开头进行简单的判断避免没有被修改过的数据重新渲染。
+
+我们又花了stateChanger为reducer，定义了reducer只能是纯函数，功能就是负责初始state，和根据state和action计算具有共享结构的新的state。
+
+createStore现在可以直接拿来用了，套路就是：
+
+    //定一个reducer
+    function reducer （state, action){
+    	/*初始化state和 switch case*/
+    }
+    //生成store
+    const store = createStore(reducer)
+    
+    //监听数据变化冲洗你渲染页面
+    store.subscribe( ()=> renderApp(store.getState()))
+    
+    //首次渲染页面
+    renderApp(store.getState())
+    
+    //后面可以随意dispatch了，页面自动更新
+    store.dispatch(..)
+    
+
+现在的代码跟React.js一点关系都没有，接下来我们要把React.js和Redux结合起来，用Redux模式帮助管理React.js的应用状态。
+
