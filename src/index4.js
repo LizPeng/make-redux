@@ -13,6 +13,7 @@ let appState = {
 function stateChanger(state, action) {
   switch (action.type) {
     case 'UPDATE_TITLE_TEXT' :
+          console.log(state.title.text)
           return { //构建新的对象并且返回
             ...state,
             title:{
@@ -21,6 +22,7 @@ function stateChanger(state, action) {
             }
           }
     case 'UPDATE_TITLE_COLOR' :
+    console.log(state.title.color)
           return { //构建新的对象并且返回
             ...state,
             title:{
@@ -93,6 +95,7 @@ store.subscribe ( ()=>{
   renderApp(newState, oldState) 
   oldState = newState 
 }) 
+
 renderApp(store.getState()) 
 
 store.dispatch({ type:'UPDATE_TITLE_TEXT',text:'React小书' })

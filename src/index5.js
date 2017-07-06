@@ -79,26 +79,7 @@ function createStore (reducer) {
     contentDOM.innerHTML = newContent.text
     contentDOM.style.color = newContent.color
   }
-//取而代之的是，我们新建一个 appState，新建 appState.title，新建 appState.title.text：
-
-let newAppState = { //新建一个newAppState
-  ...appState,  //复制appState里面的内容
-  title:{ //用一个新的对象覆盖原来的title属性
-    ...appState.title, // 复制原来title对象里面的内容
-    text: '《React.js小书》' //覆盖text属性
-  }
-}
-//修改appState.title.color
-
-let newAppState1 = {
-  ...newAppState,
-  title:{
-    ...newAppState.title,
-    color: "blue"
-  }
-}
-
-
+//reducer是不允许有副作用的。它要做的仅仅是--初始化和计算新的state
 function themeReducer(state, action){
 	if(!state) return {
 		themeName: 'Red Theme',	
@@ -115,17 +96,19 @@ function themeReducer(state, action){
 }
 
 
+//现在我们可以用这个createStore来构建不同store了，只要给它传入符合上述定义的reducer即可
+//const store = createStore(appState, stateChanger)
+const store = createStore(themeReducer)
+let oldState = store.getState() //缓存旧的state
 
-const store = createStore(appState, stateChanger)
-let oldState = store.getState()
 store.subscribe ( ()=>{
-  const newState = store.getState() //数据可能变化，获取西你的state
-  renderApp(newState, oldState) 
-  oldState = newState 
+  const newState = store.getState() //数据可能变化，获取新的state
+  renderApp(newState, oldState)  //把新旧的state传进去渲染
+  oldState = newState // 渲染完以后，新的 newState 变成了旧的 oldState，等待下一次数据变化重新渲染
 }) 
 renderApp(store.getState()) 
 
-store.dispatch({ type:'UPDATE_TITLE_TEXT',text:'React小书' })
-store.dispatch({ type:'UPDATE_TITLE_COLOR', color:'blue'}) 
+store.dispatch({ type:'UPDATE_TITLE_TEXT',text:'React小书' }) // 修改标题文本
+store.dispatch({ type:'UPDATE_TITLE_COLOR', color:'blue'}) // 修改标题颜色
 
 
