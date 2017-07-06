@@ -14,23 +14,20 @@ function createStore (reducer) {
   return { getState, dispatch, subscribe }
 }
 
-  //引入“共享结构对象”
-  function renderApp (newAppState, oldAppState={}) { 
+//引入“共享结构对象”
+function renderApp (newAppState, oldAppState={}) { 
     if(newAppState === oldAppState ) return 
     console.log('render app...')
     renderTheme(newAppState, oldAppState)
-  }
+}
 
-  function renderTheme (newTitle, oldTitle={}) {
+function renderTheme (newTitle, oldTitle={}) {
     if(newTitle === oldTitle ) return 
     console.log('render title...')
     const titleDOM = document.getElementById('title')
     titleDOM.innerHTML = newTitle.themeName
     titleDOM.style.color = newTitle.themeColor
-  }
-
-
-
+}
 
 //纯函数reducer
 function themeReducer(state, action){
@@ -47,8 +44,6 @@ function themeReducer(state, action){
       return state
 	}	
 }
-
-
 
 //生成store
 const store = createStore(themeReducer)
