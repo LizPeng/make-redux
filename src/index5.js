@@ -1,9 +1,8 @@
-
 //我们给 stateChanger 这个玩意起一个通用的名字：reducer
 function createStore (reducer) {
   let state = null 
   const listeners = [] 
-  const subscribe = (listener)=> listeners.push(listener)
+  const subscribe = (listener)=> listeners.push(listener) //订阅者模式，订阅数据修改事件，每次数据更新的时候自动重新渲染视图
   const getState = () => state
   const dispatch = (action) => {
     state = reducer(state, action) //覆盖原对象
@@ -15,8 +14,7 @@ function createStore (reducer) {
   return { getState, dispatch, subscribe }
 }
 
-
-
+  //引入“共享结构对象”
   function renderApp (newAppState, oldAppState={}) { 
     if(newAppState === oldAppState ) return 
     console.log('render app...')
@@ -34,7 +32,7 @@ function createStore (reducer) {
 
 
 
-
+//纯函数reducer
 function themeReducer(state, action){
 	if(!state) return {
 		themeName: 'Red Theme',	
@@ -52,16 +50,20 @@ function themeReducer(state, action){
 
 
 
-//const store = createStore(appState, stateChanger)
+//生成store
 const store = createStore(themeReducer)
 let oldState = store.getState()
+//监听数据变化重新渲染页面
 store.subscribe ( ()=>{
-  const newState = store.getState() //数据可能变化，获取西你的state
+  const newState = store.getState() //数据可能变化，获取新的state
   renderApp(newState, oldState) 
   oldState = newState 
 }) 
+
+//首次渲染页面
 renderApp(store.getState()) 
 
+//随意dispatch，页面自动更新
 store.dispatch({ type:'UPDATE_THEME_NAME',themeName:'THEME-NAME' })
 store.dispatch({ type:'UPDATE_THEME_COLOR', themeColor:'blue'}) 
 
