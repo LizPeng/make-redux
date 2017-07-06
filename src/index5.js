@@ -94,11 +94,12 @@ function themeReducer(state, action){
       return state
 	}	
 }
-
-
 //现在我们可以用这个createStore来构建不同store了，只要给它传入符合上述定义的reducer即可
-//const store = createStore(appState, stateChanger)
-const store = createStore(themeReducer)
+//const store = createStore(themeReducer)
+
+
+
+const store = createStore(appState, stateChanger)
 let oldState = store.getState() //缓存旧的state
 
 store.subscribe ( ()=>{
