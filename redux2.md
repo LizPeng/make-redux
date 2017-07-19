@@ -1,4 +1,4 @@
-#Redux(二): 抽离store和监控数据变化
+# Redux(二): 抽离store和监控数据变化
 
 
 上一节，我们有了 `appStore` 和 `diapatch`
@@ -17,24 +17,24 @@ createStore接受两个参数，一个是表示应用程序状态的state；另�
 
  `dispatch` 用于修改数据，和以前一样会接受action，然后会把`state`和`action`一并传给`stateChanger`，那么`stateChanger`就可以根据 `action`来修改state了。
 
-function stateChanger(state, action) {
-  switch (action.type) {
-    case 'UPDATE_TITLE_TEXT' :
-          state.title.text = action.text 
-          break
-    case 'UPDATE_TITLE_COLOR' :
-          state.title.color = action.color
-          break
-    default: 
-          break
-  }
-}
+    function stateChanger(state, action) {
+      switch (action.type) {
+        case 'UPDATE_TITLE_TEXT' :
+              state.title.text = action.text 
+              break
+        case 'UPDATE_TITLE_COLOR' :
+              state.title.color = action.color
+              break
+        default: 
+              break
+      }
+    }
 
-function createStore (state, stateChanger) {
-  const getState = () => state
-  const dispatch = (action) => stateChanger(state, action)
-  return { getState, dispatch }
-}
+    function createStore (state, stateChanger) {
+      const getState = () => state
+      const dispatch = (action) => stateChanger(state, action)
+      return { getState, dispatch }
+    }
 
     ////////////////
     //新增几个渲染函数,会把上面状态的数据渲染到页面上
@@ -69,7 +69,7 @@ function createStore (state, stateChanger) {
 
 针对每个不同的App，我们可以给createStore传入初始的数据`appState`，和一个描述数据变化的函数`stateChanger`，然后生成一个store。需要修改数据的时候通过store.dispatch,需要获取数据的时候通过store.getState 。
 
-##监控数据变化
+## 监控数据变化
 
 上面的代码有一个问题，我们每次通过`dispatch`修改数据的时候，其实只是数据发生了变化，如果我们不手动调用renderApp，页面上的内容是不会发生变化的。但是我们总不能每次`dispatch`的时候都手动调用一下`renderApp`，我们肯定希望数据变化的时候程序变化的时候程序能够智能一点地自动重新渲染数据，而不是手动调用。
 
@@ -106,6 +106,6 @@ function createStore (state, stateChanger) {
     store.subscribe( ()=> renderApp2(store.getState()))
 
 
-##总结
+## 总结
 
 现在我们有了一个比较通用的`createStore`，它可以产生一种我们新定义的数据类型`store`，通过`store.getState`我们获取共享状态，而且我们约定只能通过`store.dispatch`修改共享状态。`store`也允许我们通过`store.subscribe`监听数据状态被修改了 ，并且进行了后续的例如重新渲染页面的操作。
