@@ -52,15 +52,15 @@ stateChanger现在既充当了获取初始化数据的功能，也充当了生�
 
 这是一个最终形态的`createStore`，它接受的参数叫reducer，reducer是一个函数，细心的朋友会发现，它其实是一个纯函数（Pure Function）。
 
-##reducer
+## reducer
 
 createStore接受一个叫reducer的函数作为参数，**这个函数规定是一个纯函数**，它接受两个参数，一个是state，一个是action。
 
-如果没有传入state或者state是null，那么它就会返回一个初始化的数据。如果有传入state的话，就会根据action来“修改”数据，但其实它没有、也规定不能修改state，而是要通过上节所说的把修改轮的对象都复制一遍，然后生产一个新的对象返回。如果它不能识别你的action，就不会产生新的数据，而是（在default内部）把state原封不动地返回。
+如果没有传入state或者state是null，那么它就会返回一个初始化的数据。如果有传入state的话，就会根据action来“修改”数据，但其实它没有、也规定不能修改state，而是要通过上节所说的把修改路径的对象都复制一遍，然后生产一个新的对象返回。如果它不能识别你的action，就不会产生新的数据，而是（在default内部）把state原封不动地返回。
 
 reducer是不允许有副作用的。你不能再里面操作DOM，也不能发Ajax请求，更不能直接修改state，它要做的仅仅是--**初始化和计算新的state**。
 
-现在我们可以用这个createStore来构建不同是store了，只要给它传入符合上述定义的reducer即可：
+现在我们可以用这个createStore来构建不同的store了，只要给它传入符合上述定义的reducer即可：
 
     function themeReducer(state, action){
     	if(!state) return {
@@ -79,7 +79,7 @@ reducer是不允许有副作用的。你不能再里面操作DOM，也不能发A
 	const store = createStore(themeReducer)
 
 
-##总结
+## 总结
 
 我们从一个简单的例子的代码中发现了共享的状态如果可以被任意修改的话，那么程序的行为将非常不可预测，所以我们提高了修改数据的门槛：你必须通过dispatch执行某些允许的修改操作，而且必须大张旗鼓的在action里面声明。
 
