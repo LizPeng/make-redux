@@ -11,7 +11,7 @@
     const obj = {a:1, b:2}
     cosnt obj2 = {...obj, b:3, c:4} //=>{a:1,b:3,c:4}
 
-我们可以把这种特性应用在state的更新上，我们禁止直接修改原来的对象，一旦你要修改某些东西，你就得把修改路径上的所有对象复制一遍，例如，我们不写鞋面的修改：
+我们可以把这种特性应用在state的更新上，我们禁止直接修改原来的对象，一旦你要修改某些东西，你就得把修改路径上的所有对象复制一遍，例如，我们不写下面的修改代码：
 
     appState.title.text = '<React.js小书>'
 
@@ -20,11 +20,10 @@
     let newAppState = { //新建一个newAppState
     	...appState, //复制appState里面的内容
     	title:{ //用一个新的对象覆盖原来的title属性
-    		...appState.title	 //复制原来title对象里面的内容
+		...appState.title， //复制原来title对象里面的内容
     		text: '《React.js小书》' //覆盖text属性 
     	}
     }
-
 
 如果我们用一个树状的结构来表示对象解构的话：
 
