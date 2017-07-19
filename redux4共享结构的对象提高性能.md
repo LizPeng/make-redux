@@ -20,7 +20,7 @@
     let newAppState = { //新建一个newAppState
     	...appState, //复制appState里面的内容
     	title:{ //用一个新的对象覆盖原来的title属性
-		...appState.title， //复制原来title对象里面的内容
+		...appState.title, //复制原来title对象里面的内容
     		text: '《React.js小书》' //覆盖text属性 
     	}
     }
